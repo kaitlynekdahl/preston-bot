@@ -1,0 +1,17 @@
+{
+  "name": "preston-bot",
+  "version": "1.0.0",
+  "description": "As usual, I've got something else for you to look into.",
+  "main": "bot.js",
+  "author": "Sogono",
+  "dependencies": {
+    "@discordjs/opus": "^0.1.0",
+    "bufferutil": "^4.0.1",
+    "discord.js": "^12.2.0",
+    "erlpack": "github:discordapp/erlpack",
+    "ffmpeg-static": "^4.1.1",
+    "fs": "0.0.1-security",
+    "libsodium-wrappers": "^0.7.6",
+    "utf-8-validate": "^5.0.2"
+  }
+}
