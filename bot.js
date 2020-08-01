@@ -98,6 +98,12 @@ client.on('message', async message => {
         });
         break;
       }
+      case '<@!703664920520163479>': {
+        let parts = args[1].split(' or ');
+        let item = Math.round(Math.random() * 1);
+        console.log(parts);
+        break;
+      }
     }
   } else {//the message isn't a command, so check for keyword to react to
     Object.keys(constants.reactions).forEach(e => {
@@ -105,6 +111,14 @@ client.on('message', async message => {
         message.react(constants.reactions[e]);
       }
     });
+    if(message.mentions.users.has('703664920520163479')){
+      if (message.content.toLowerCase().includes(' or ')){
+        let parts = message.content.toLowerCase().split(' or ');
+        parts[0].replace('<@!703664920520163479> ','');
+        let item = Math.round(Math.random() * 1);
+        message.channel.send(`${parts[item]}, of course.`);
+      }
+    }
   }
 });
 
