@@ -114,7 +114,7 @@ client.on('message', async message => {
     if(message.mentions.users.has('703664920520163479')){
       if (message.content.toLowerCase().includes(' or ')){
         let parts = message.content.toLowerCase().split(' or ');
-        parts[0].replace('<@!703664920520163479> ','');
+        parts[0] = parts[0].replace('<@!703664920520163479> ','');
         let item = Math.round(Math.random() * 1);
         message.channel.send(`${parts[item]}, of course.`);
       }
