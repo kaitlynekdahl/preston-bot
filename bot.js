@@ -11,7 +11,7 @@ client.login(auth.token);
 client.on('ready', e => {
   console.log('Bot online!');
   client.channels.fetch(constants.general).then(general => {
-    //general.send("Papa preston is online");
+    client.user.setActivity('Commonwealth Radio', { type: 'LISTENING' });
   });
 });
 
@@ -81,6 +81,7 @@ client.on('message', async message => {
       }
       case 'spongecase': {
         message.channel.send(spongeCase(args[1]));
+        message.delete();
         break;
       }
       case 'prestonlove': {
@@ -102,6 +103,12 @@ client.on('message', async message => {
         let parts = args[1].split(' or ');
         let item = Math.round(Math.random() * 1);
         console.log(parts);
+        break;
+      }
+      case 'prestonsay': {
+        if(args[1]){
+          message.channel.send(args[1]);
+        }
         break;
       }
     }
