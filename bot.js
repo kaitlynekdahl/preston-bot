@@ -1,6 +1,8 @@
 const Discord = require('discord.js');
 const constants = require('./constants.json');
 const auth = require('./auth.json');
+const emoji = require('node-emoji');
+const axios = require('axios');
 const fs = require('fs');
 
 var playing = false;
@@ -64,6 +66,15 @@ client.on('message', async message => {
       case 'eels':
         playSound(message, './audio/eels.mp3');
         break;
+      case 'cringe':
+        playSound(message, './audio/cringe.mp3');
+        break;
+      case 'jail':
+        playSound(message, './audio/jail.mp3');
+        break;
+      case 'evil':
+        playSound(message, './audio/evil.mp3');
+        break;
       case 'prestonsad': {
         let path = constants.angryAudioDirectory;
         let files = fs.readdirSync(path);
@@ -81,7 +92,6 @@ client.on('message', async message => {
       }
       case 'spongecase': {
         message.channel.send(spongeCase(args[1]));
-        message.delete();
         break;
       }
       case 'prestonlove': {
@@ -99,6 +109,25 @@ client.on('message', async message => {
         });
         break;
       }
+      case 'prestonai': {
+        let text = args[1];
+        message.channel.send(`${text}...`).then(msg => {
+          axios.post('https://api.inferkit.com/v1/models/standard/generate', {
+            "prompt": {
+              "text": text,
+              "isContinuation": true,
+            },
+            "length": 400
+          }, {
+            headers: { 'Authorization': `Bearer ${constants.inferKey}` }
+          }).then(res => {
+            msg.edit(text + res.data.data.text)
+          }).catch(err => {
+            console.log(err);
+          });
+        });
+        break;
+      }
       case '<@!703664920520163479>': {
         let parts = args[1].split(' or ');
         let item = Math.round(Math.random() * 1);
@@ -106,25 +135,32 @@ client.on('message', async message => {
         break;
       }
       case 'prestonsay': {
-        if(args[1]){
+        if (args[1]) {
           message.channel.send(args[1]);
         }
         break;
       }
     }
+    message.delete();
   } else {//the message isn't a command, so check for keyword to react to
     Object.keys(constants.reactions).forEach(e => {
       if (message.content.toLowerCase().includes(e)) {
         message.react(constants.reactions[e]);
       }
     });
-    if(message.mentions.users.has('703664920520163479')){
-      if (message.content.toLowerCase().includes(' or ')){
+    if (message.mentions.users.has('703664920520163479')) {
+      if (message.content.toLowerCase().includes(' or ')) {
         let parts = message.content.toLowerCase().split(' or ');
-        parts[0] = parts[0].replace('<@!703664920520163479> ','');
+        parts[0] = parts[0].replace('<@!703664920520163479> ', '');
         let item = Math.round(Math.random() * 1);
         message.channel.send(`${parts[item]}, of course.`);
       }
+    }
+    //a small chance preston will thumbs down a given message
+    let x = Math.floor(Math.random() * 100);
+    if(x >= 41 && x <= 42){
+      console.log(`preston decided to react to message by ${message.author.username}`);
+      message.react(emoji.random().emoji);
     }
   }
 });
