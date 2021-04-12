@@ -159,8 +159,9 @@ client.on('message', async message => {
     //a small chance preston will thumbs down a given message
     let x = Math.floor(Math.random() * 100);
     if(x >= 41 && x <= 42){
-      console.log(`preston decided to react to message by ${message.author.username}`);
-      message.react(emoji.random().emoji);
+      let e = emoji.random();
+      console.log(`preston dreacted to ${message.author.username} with '${e.key}'`);
+      message.react(e.emoji);
     }
   }
 });
