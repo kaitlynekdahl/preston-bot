@@ -75,6 +75,10 @@ client.on('message', async message => {
       case 'evil':
         playSound(message, './audio/evil.mp3');
         break;
+        case 'barbie':
+          playSound(message, './audio/barbie.mp3');
+          message.channel.send(`_'I'm a barbie girl' plays but you're in a sewer full of rats_`);
+          break;
       case 'prestonsad': {
         let path = constants.angryAudioDirectory;
         let files = fs.readdirSync(path);
@@ -123,7 +127,7 @@ client.on('message', async message => {
           }).then(res => {
             msg.edit(text + res.data.data.text)
           }).catch(err => {
-            console.log(err);
+            msg.edit(`${err.response.status}: ${err.response.data.error.message}`);
           });
         });
         break;
