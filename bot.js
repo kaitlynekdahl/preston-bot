@@ -66,11 +66,20 @@ client.on('message', async message => {
       case 'eels':
         playSound(message, './audio/eels.mp3');
         break;
+        case 'oof':
+          playSound(message, './audio/oof.mp3');
+          break;
       case 'cringe':
         playSound(message, './audio/cringe.mp3');
         break;
       case 'jail':
         playSound(message, './audio/jail.mp3');
+        break;
+      case 'smash':
+        let file = `./audio/announcer/vc_narration_${args[1]}.wav`;
+        console.log(file);
+        if(fs.existsSync(file))
+        playSound(message, file);
         break;
       case 'evil':
         playSound(message, './audio/evil.mp3');
